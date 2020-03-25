@@ -8,32 +8,41 @@ vector<string> split_string(string);
 // Contests is a double vector array with [i][j] being
 // i = value of the contest (the amount that will be added or subtracted depending on loss or win respectively)
 // j = importance (1 = important, 0 = unimportant)
-int luckBalance(int k, vector<vector<int>> contests) {
+int luckBalance(int k, vector<vector<int>> contests) 
+{
+    // initial integers to keep track of stuff
     int final_luck = 0;
     int size = contests.size();
     int lossTrack = k;
 
+    // sort the contests array so that it is in increasing order
     sort(contests.begin(), contests.begin() + size);
 
+    // start at the last elemnt of the array and go backwards to the first element
+    // this is done so that the loop can prioritize losing as many high importance contests as possible to maximize luck
     for(int i = size - 1; i >= 0; i--)
     {
+        // temporary variables to keep track of the current contests' luck and importance values
         int luck = contests[i][0];
         int importance = contests[i][1];
+
+        // if a contest is unimportant, always lose
+        // if a contest is important, check if we have lost enough times yet
+        // if we have already lost too many times, start to reduce the luck by whatever important contests remain
+        // after lossTrack has been exhausted
+        
         if(importance == 0)
         {
             final_luck += luck;
-            cout << luck << endl;
         }
         else if(importance == 1 && lossTrack > 0)
         {
             final_luck += luck;
-            cout << luck << endl;
             lossTrack--;
         }
         else
         {
             final_luck -= luck;
-            cout << luck << endl;
         }
     }
 
